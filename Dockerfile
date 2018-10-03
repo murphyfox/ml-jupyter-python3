@@ -51,7 +51,7 @@ RUN pip --no-cache-dir install \
         Pillow \
         h5py \
         google-api-python-client \
-	gensim \
+        gensim \
         && \
     python -m ipykernel.kernelspec
 
@@ -62,7 +62,7 @@ ENV CONFIG_IPYTHON /root/.ipython/profile_default/ipython_config.py
 RUN jupyter notebook --generate-config --allow-root && \
     ipython profile create
 
-RUN echo "c.NotebookApp.ip = '*'" >>${CONFIG} && \
+RUN echo "c.NotebookApp.ip = '0.0.0.0'" >>${CONFIG} && \
     echo "c.NotebookApp.open_browser = False" >>${CONFIG} && \
     echo "c.NotebookApp.iopub_data_rate_limit=10000000000" >>${CONFIG} && \
     echo "c.MultiKernelManager.default_kernel_name = 'python3'" >>${CONFIG} 
