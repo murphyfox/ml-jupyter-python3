@@ -1,6 +1,5 @@
 # TensorFlow & scikit-learn with Python3.6
 FROM python:3.6
-LABEL maintainer “Shiho ASA<asashiho@mail.asa.yokohama>”
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -12,10 +11,22 @@ RUN apt-get update && apt-get install -y \
     libmecab-dev \
 	gfortran \
     libav-tools \
-    python3-setuptools
+    python3-setuptools \
+    mecab-ipadic-utf8 \
+    git \
+    make \
+    curl \
+    xz-utils \
+    file
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install NEologd
+RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git /tmp/neologd && \
+  cd /tmp/neologd && \
+  ./bin/install-mecab-ipadic-neologd -n -u -y && \
+  rm -rf /tmp/neologd
 
 # Install TensorFlow CPU version
 ENV TENSORFLOW_VERSION 1.5.0
